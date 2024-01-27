@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const db = mongoose.connect('mongodb://127.0.0.1:27017/groceryapp')
+const db = mongoose.connect(process.env.MONGODB_URI)
           .then((result)=>{
               console.log('Successfuly connected to db');
           })

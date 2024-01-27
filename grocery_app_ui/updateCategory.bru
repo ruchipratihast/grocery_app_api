@@ -6,6 +6,13 @@ meta {
 
 put {
   url: http://localhost:8000/api/v1/category/edit/65b13fb62f6f44e9a09c14da
-  body: none
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "name": "Update Technology",
+    "image": "https://example.com/tech1-image.jpg"
+  }
 }

@@ -1,41 +1,54 @@
 const Category = require("../models/categoryModel")
 
-const getAllCategory = ((re, res) => {
+const getAllCategory = (req, res) => {
     try {
         Category.find()
-            .then((result) => res.json({ message: result }))
-            .catch((err) => console.log(err))
+            .then((result) => res.status(200).json({ message: result }))
+            .catch((err) => {
+                return res.status(500).json({ message: 'Error fetching category' });
+            })
     }
     catch (err) {
-        res.json({ message: err })
+        res.status(500).json({ message: err })
     }
-})
+}
 
 const createCategory = async (req, res) => {
     try {
-        // const { name,image } = req.body;
+        const { name,image } = req.body;
 
-        // if (!name || !image) {
-        //     return res.status(400).json({
-        //         errorMessage: "Bad Request",
-        //     });
-        // }
+        if (!name || !image) {
+            return res.status(400).json({
+                errorMessage: "Bad Request",
+            });
+        }
 
         CategoryDetails = new Category({
-            "name": "Technology",
-            "image": "https://example.com/tech1-image.jpg",
+            // "name": "Technology",
+            // "image": "https://example.com/tech1-image.jpg",
+            name,
+            image
         });
 
         await CategoryDetails.save();
+        return res.status(200).json({ message: "New job created successfully" });
 
-        res.json({ message: "New job created successfully" });
     } catch (error) {
-        console.log(error);
+        return res.status(500).json({ message: error });;
     }
 }
 
 const editCategory = async (req, res) => {
+
     try {
+
+        const { name,image } = req.body;
+
+        if (!name || !image) {
+            return res.status(400).json({
+                errorMessage: "Bad Request",
+            });
+        }
 
         const cateId = req.params.categoryId;
 
@@ -43,15 +56,17 @@ const editCategory = async (req, res) => {
             { _id: cateId },
             {
                 $set: {
-                    "name": "Update Technology",
-                    "image": "https://example.com/tech1-image.jpg",
+                    // "name": "Update Technology",
+                    // "image": "https://example.com/tech1-image.jpg",
+                    name,
+                    image
                 }
             }
         );
-        res.json({ message: "Category updated successfully" });
+        return res.status(200).json({ message: "Category updated successfully" });
     }
     catch (err) {
-        res.json({ message: err })
+        return res.status(200).json({ message: err })
     }
 }
 
@@ -61,14 +76,14 @@ const deleteCategory = async (req, res) => {
 
         const isId = await Category.findByIdAndDelete(cateId);
         if (isId) {
-            res.status(200).json({ message: `User with id ${cateId} successfully deleted` });
+           return res.status(200).json({ message: `User with id ${cateId} successfully deleted` });
         }
         else {
-            res.status(500).json({ message: `UserId Not Found` });
+           return res.status(500).json({ message: `UserId Not Found` });
         }
 
     } catch (error) {
-        console.log(error);
+        return res.status(200).json({ message: err })
     }
 }
 

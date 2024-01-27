@@ -1,0 +1,21 @@
+meta {
+  name: editBanner
+  type: http
+  seq: 6
+}
+
+put {
+  url: http://localhost:8000/api/v1/banner/edit/65b4e4d1166eae8ea475c52a
+  body: json
+  auth: none
+}
+
+body:json {
+  
+  {
+    "image" : "some category image" ,
+    "type"  : "category" ,
+    "target": "some"
+  }
+  
+}

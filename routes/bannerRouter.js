@@ -1,13 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const { getAllBanner, getBannerById, createBanner, updateBanner, deleteBanner } = require('../controllers/bannerController');
+const { getAllBanner , createBanner, updateBanner, deleteBanner } = require('../controllers/bannerController');
 
 // GET all banners
 router.get('/all', getAllBanner);
-
-// GET a specific banner by ID
-router.get('/all/:id', getBannerById);
 
 // POST a new banner
 router.post('/create', createBanner);
